@@ -1,7 +1,7 @@
 <div class="card bg-dark text-white">
-  <div class="card-header" *ngIf="!cliente.id else elseBlock1">{{ titulo }}</div>
-  <ng-template #elseBlock1>
-    <div class="card-header">Actualizar Datos</div>
+  <div class="card-header" *ngIf="!cliente.id else elseBlock2">{{ titulo }}</div>
+  <ng-template #elseBlock2>
+    <div class="card-header">Actualizar</div>
   </ng-template>
   <div class="card-body">
 
@@ -29,13 +29,13 @@
 
       <div class="form-group row">
         <div class="col-sm-6">
-          <button type="btn btn-primary" role="button" (click)='create()' *ngIf="!cliente.id else elseBlock">Crear</button>
+          <button class="btn btn-primary" role="button" (click)='create()' *ngIf="!cliente.id else elseBlock">Crear</button>
+
           <ng-template #elseBlock>
-            <button type="btn btn-primary" role="button" (click)='update()'>Actualizar</button>
+            <button class="btn btn-primary" role="button" (click)='update()'>Actualizar</button>
           </ng-template>
         </div>
       </div>
-
     </form>
 
   </div>
