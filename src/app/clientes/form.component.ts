@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Cliente } from './cliente';
 import { ClienteService } from './cliente.service';
-import { Router,ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
 
 @Component({
@@ -10,43 +10,54 @@ import swal from 'sweetalert2';
 })
 export class FormComponent implements OnInit {
 
-  private cliente: Cliente = new Cliente();
-  private titulo: string = "Registrar Cliente";
+  public cliente: Cliente = new Cliente();
+  titulo: string = "Registrar Cliente";
+  errores: string[];
 
   constructor(private clienteService: ClienteService,
-              private router: Router,
-              private activatedRoute: ActivatedRoute) { }
+    private router: Router,
+    private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.cargarcliente();
   }
 
-  cargarcliente(): void{
+  cargarcliente(): void {
     this.activatedRoute.params.subscribe(
       params => {
         let id = params['id']
-        if(id){
+        if (id) {
           this.clienteService.getCliente(id).subscribe((cliente) => this.cliente = cliente)
         }
       }
     )
   }
 
-  public create(): void{
+  public create(): void {
     this.clienteService.create(this.cliente).subscribe(
-      response => {
+      JSON => {
         this.router.navigate(['/clientes'])
-        swal.fire('Nuevo Cliente',`Cliente ${this.cliente.nombre} registrad@ con exito!`,'success')
+        swal.fire('Nuevo Cliente', `${JSON.mensaje} : ${JSON.cliente.nombre} ${JSON.cliente.apellido}`, 'success')
+      },
+      err => {
+        this.errores = err.error.errors as string[];
+        console.error('Código de error de la petición: ' + err.error.status);
+        console.error(err.error.errors);
       }
     )
     console.log("clicked");
     console.log(this.cliente);
   }
-  update():void{
+  update(): void {
     this.clienteService.update(this.cliente).subscribe(
-      cliente =>{
+      JSON => {
         this.router.navigate(['/clientes'])
-        swal.fire('Cliente Actualizado',`Cliente ${this.cliente.nombre} actualizad@ con exito!`,'success')
+        swal.fire('Cliente Actualizado', `${JSON.mensaje} : ${JSON.cliente.nombre} ${JSON.cliente.apellido}`, 'success')
+      },
+      err => {
+        this.errores = err.error.errors as string[];
+        console.error('Código de error de la petición: ' + err.error.status);
+        console.error(err.error.errors);
       }
     )
   }
