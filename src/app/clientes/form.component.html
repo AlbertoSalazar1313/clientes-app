@@ -31,7 +31,6 @@
       <div class="form-group row">
         <label for="apellido" class="col-form-label col-sm-2">Apellido</label>
         <div class="col-sm-6">
-          <!-- -->
           <!-- Estas Validaciones Ya No Se Utilizaran Porque Desde El Backend Ya Se Hace -->
           <!-- <input type="text" class="form-control" [(ngModel)]="cliente.apellido" name="apellido" required minlength="3" #apellido="ngModel"> -->
           <input type="text" class="form-control" [(ngModel)]="cliente.apellido" name="apellido" #apellido="ngModel">
@@ -60,6 +59,17 @@
               El email debe tener un formato válido
             </div>
           </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="createAt" class="col-form-label col-sm-2">Fecha</label>
+        <div class="col-sm-6">
+          <!-- Estas Validaciones Ya No Se Utilizaran Porque Desde El Backend Ya Se Hace -->
+          <!-- <input type="text" class="form-control" [(ngModel)]="cliente.apellido" name="apellido" required minlength="3" #apellido="ngModel"> -->
+            <input matInput [matDatepicker]="picker" class="form-control" [(ngModel)]="cliente.createAt" name="createAt" style="width:296px; float:left">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
         </div>
       </div>
 

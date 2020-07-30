@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { formatDate } from '@angular/common';
+//import { formatDate, DatePipe, registerLocaleData } from '@angular/common';
+//import { DatePipe} from '@angular/common';
 import { Cliente } from './cliente';
 import { map,catchError,tap } from 'rxjs/operators';
-import { of, Observable, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import swal from 'sweetalert2';
 import { Router } from '@angular/router';
@@ -32,7 +33,9 @@ export class ClienteService {
         cliente.nombre = cliente.nombre.toUpperCase();
         //cliente.apellido = cliente.apellido.toUpperCase();
         //cliente.email = cliente.email.toUpperCase();
-        cliente.createAt = formatDate(cliente.createAt,'EEEE MMMM dd, yyyy','en-US');
+        //let datePipe = new DatePipe('en');
+        //cliente.createAt = datePipe.transform(cliente.createAt, 'EEEE MMMM dd, yyyy');
+        //cliente.createAt = formatDate(cliente.createAt,'EEEE MMMM dd, yyyy','en-US');
         return cliente;
       });
       return response;
@@ -60,7 +63,7 @@ export class ClienteService {
       })
     );
   }
-  getCliente(id): Observable<Cliente>{
+  getCliente(id: number): Observable<Cliente>{
     return this.http.get<Cliente>(`${this.urlEndPoint}/${id}`).pipe(catchError(e => {
       this.router.navigate(['/clientes']);
       console.error( e.error.mensaje);
